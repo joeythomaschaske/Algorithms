@@ -1,1 +1,4 @@
 *.iml
+.idea/*
+out/production/Algorithms/*
+.DS_Store

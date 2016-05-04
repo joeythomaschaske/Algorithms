@@ -8,5 +8,10 @@ public class Main {
         ArrayList<Integer> randomNumbers = RandomListGenerator.generateList();
         System.out.println(randomNumbers);
         System.out.println(MergeSort.sort(randomNumbers));
+        System.out.println('\n');
+        randomNumbers = RandomListGenerator.generateList();
+        System.out.println(randomNumbers);
+        System.out.println(QuickSort.sort(randomNumbers));
+
     }
 }

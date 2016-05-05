@@ -8,7 +8,7 @@ public class RandomListGenerator
     public static ArrayList<Integer> generateList()
     {
         ArrayList<Integer> randomNumbers = new ArrayList<>();
-        for(int i = 0; i < 100; ++i)
+        for(int i = 0; i < 1000; ++i)
         {
             randomNumbers.add((int)(Math.random() * 1000));
         }

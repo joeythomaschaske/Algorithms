@@ -19,7 +19,12 @@ public class Main {
 
         randomNumbers = RandomListGenerator.generateList();
         System.out.println(randomNumbers);
-        System.out.println(BucketSort.sort(randomNumbers));
+        System.out.println(BucketSort.sort(randomNumbers, 0));
 
+        System.out.println('\n');
+
+        randomNumbers = RandomListGenerator.generateList();
+        System.out.println(randomNumbers);
+        System.out.println(RadixSort.sort(randomNumbers));
     }
 }

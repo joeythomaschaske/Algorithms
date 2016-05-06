@@ -8,14 +8,13 @@ public class InsertionSort {
     {
         for(int i = 1; i < list.size(); ++i)
         {
-            int valToSort = list.get(i);
-            for(int j = 0; j <= i; ++j)
+            for(int j = 0; j < i; ++j)
             {
-                int valToCompare = list.get(j);
-                if(valToSort < valToCompare)
+                if(list.get(i) < list.get(j))
                 {
-                    list.set(i, valToCompare);
-                    list.set(j, valToSort);
+                    int temp = list.get(i);
+                    list.set(i, list.get(j));
+                    list.set(j, temp);
                 }
             }
         }

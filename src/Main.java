@@ -1,3 +1,5 @@
+import Algorithms.*;
+
 import java.util.ArrayList;
 
 /**

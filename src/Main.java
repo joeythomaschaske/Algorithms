@@ -31,6 +31,6 @@ public class Main {
 
         randomNumbers = RandomListGenerator.generateList();
         System.out.println(randomNumbers);
-        System.out.println(RadixSort.sort(randomNumbers));
+        System.out.println(InsertionSort.sort(randomNumbers));
     }
 }

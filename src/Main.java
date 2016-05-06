@@ -26,5 +26,11 @@ public class Main {
         randomNumbers = RandomListGenerator.generateList();
         System.out.println(randomNumbers);
         System.out.println(RadixSort.sort(randomNumbers));
+
+        System.out.println('\n');
+
+        randomNumbers = RandomListGenerator.generateList();
+        System.out.println(randomNumbers);
+        System.out.println(RadixSort.sort(randomNumbers));
     }
 }

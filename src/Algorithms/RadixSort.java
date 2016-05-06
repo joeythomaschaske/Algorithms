@@ -1,5 +1,6 @@
+package Algorithms;
+
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by josephthomaschaske on 5/4/16.

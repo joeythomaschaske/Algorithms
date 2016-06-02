@@ -11,7 +11,7 @@ public class BinaryTreeClass {
         bt.insert(10);
         bt.insert(32);
         bt.insert(78);
-        bt.inorder(bt.root);
+        bt.inorder();
         System.out.println(bt.search(40, bt.root).val);
     }
     public static class BinaryTree {
@@ -30,6 +30,14 @@ public class BinaryTreeClass {
             }
         }
 
+        public void delete(int val) {
+
+        }
+
+        private void delete(int val, Node node) {
+
+        }
+
         private void insert(Node parent, int val){
             if(parent.left == null && val < parent.val){
                 parent.left = new Node(val);
@@ -45,7 +53,10 @@ public class BinaryTreeClass {
             }
         }
 
-        public void inorder(Node node){
+        public void inorder() {
+            inorder(root);
+        }
+        private void inorder(Node node){
             if(node != null){
                 inorder(node.left);
                 System.out.println(node.val);

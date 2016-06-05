@@ -127,12 +127,23 @@ public class BinaryTreeClass {
             }
         }
 
+        /**
+         * the public method that is accessible for deletion
+         * @param val the value to be removed from the BST
+         * @return the node with the specified value
+         */
         public Node delete(int val) {
             return delete(val, root);
         }
 
+        /**
+         * private helper method for the public delete method.
+         * @param val the value to be searched and removed
+         * @param node the current node we are checking to see if it has the same value as the val param
+         * @return the node that we are removing
+         */
         private Node delete(int val, Node node) {
-            if(search(val) == null) {
+            if(search(val) == null) { //search to see if the value exists in the BST
                 return null;
             }
             else{
@@ -160,28 +171,39 @@ public class BinaryTreeClass {
             }
         }
 
+        /**
+         * detaches a node from its parent
+         * @param node the node to be detached from its parent
+         */
         private void deleteLeafNode(Node node){
             detach(node);
         }
 
+        /**
+         * removes a node from the BST that has a single child. The node might have a right child or left child
+         * if it has a left child it is replaced by its predecessor. If the predecessor has a child it will be relinked
+         * if it has a right child it is replaced bu its successor. If the successor has a child it will be relinked
+         * @param node the node to be deleted
+         */
         private void deleteSingleChildNode(Node node){
             if(node.left != null){
                 Node predecessor = getPredecessor(node);
                 if(predecessor.left != null){
-                    //relink
+                    //relink the predecessor's child to its parent
                     predecessor.parent.right = predecessor.left;
                     predecessor.left.parent = predecessor.parent;
-                    //remove
+                    //replace the current node with the predecessor
                     node.left.parent = predecessor;
-                    if(predecessor != node.left) {
+                    if(predecessor != node.left) { //will cause the predecessor to point to itself. Infinite loop
                         predecessor.left = node.left;
                     }
                     predecessor.parent = node.parent;
                 }
                 else {
+                    //just
                     node.left.parent = predecessor;
                     predecessor.parent.right = null;
-                    if(node.left != predecessor){
+                    if(node.left != predecessor){ //will cause the predecessor to point to itself. Infinite loop
                         predecessor.left = node.left;
                     }
                     predecessor.parent = node.parent;
@@ -192,12 +214,12 @@ public class BinaryTreeClass {
             else{
                 Node successor = getSuccessor(node);
                 if(successor.right != null){
-                    //relink
+                    //relink the predecessor's child to its parent
                     successor.parent.left = successor.right;
                     successor.right.parent = successor.parent;
-                    //remove
+                    //replace the current node with the successor
                     node.right.parent = successor;
-                    if(node.right != successor) {
+                    if(node.right != successor) { //will cause the successor to point to itself. Infinite loop
                         successor.right = node.right;
                     }
                     successor.parent = node.parent;
@@ -205,7 +227,7 @@ public class BinaryTreeClass {
                 else {
                     node.right.parent = successor;
                     successor.parent.left = null;
-                    if(node.right != successor) {
+                    if(node.right != successor) { //will cause the successor to point to itself. Infinite loop
                         successor.right = node.right;
                     }
                     successor.parent = node.parent;
@@ -214,13 +236,19 @@ public class BinaryTreeClass {
             }
         }
 
+        /**
+         * removes a node from the BST that has two children.
+         * we replace the node with its predecessor. If the predecessor has a child it will be relinked
+         * @param node the node to be deleted
+         */
         private void deleteTwoChildNode(Node node){
+            //we can choose to either replace with the successor or predecessor. Just go with predecessor
             Node predecessor = getPredecessor(node);
             if(predecessor.left != null){
-                //relink
+                //relink the predecessor's child to its parent
                 predecessor.parent.right = predecessor.left;
                 predecessor.left.parent = predecessor.parent;
-                //remove
+                //replace the current node with the predecessor
                 node.left.parent = predecessor;
                 if(node.left != predecessor) {
                     predecessor.left = node.left;
@@ -230,12 +258,12 @@ public class BinaryTreeClass {
             else {
                 node.left.parent = predecessor;
                 predecessor.parent.right = null;
-                if(predecessor != node.left) {
+                if(predecessor != node.left) { //will cause the predecessor to point to itself. Infinite loop
                     predecessor.left = node.left;
                 }
                 predecessor.parent = node.parent;
             }
-            if(predecessor != node.left) {
+            if(predecessor != node.left) { //will cause the predecessor to point to itself. Infinite loop
                 predecessor.left = node.left;
             }
             predecessor.right = node.right;
@@ -244,6 +272,10 @@ public class BinaryTreeClass {
             detach(node, predecessor);
         }
 
+        /**
+         * detached a node from its parent
+         * @param node the node to be detached
+         */
         private void detach(Node node){
             if(node != root) {
                 if (node.parent.left == node) {
@@ -257,6 +289,11 @@ public class BinaryTreeClass {
             }
         }
 
+        /**
+         * detaches a node from its parent. Replaces the parents child with the replacement node
+         * @param current the current node to be removed
+         * @param replacement the replacement node to replace the current node
+         */
         private void detach(Node current, Node replacement){
             if(current != root) {
                 if (current.parent.left == current) {
@@ -270,6 +307,12 @@ public class BinaryTreeClass {
                 root.parent = null;
             }
         }
+
+        /**
+         * returns the successor of a node
+         * @param node the node we want to produce a successor of
+         * @return the successor
+         */
         private Node getSuccessor(Node node){
             Node successor = node;
             if(successor.right != null){
@@ -284,6 +327,11 @@ public class BinaryTreeClass {
             return successor;
         }
 
+        /**
+         * returns a predecessor of a node
+         * @param node the node we want to produce a predecessor of
+         * @return the predecessor
+         */
         private Node getPredecessor(Node node){
             Node predecessor = node;
             if(predecessor.left != null){

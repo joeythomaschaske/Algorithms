@@ -4,7 +4,7 @@ package Algorithms;
  * Created by josephthomaschaske on 5/31/16.
  */
 public class BinaryTreeClass {
-    public static void main(String [] args) {
+    public static void main(String[] args) {
         BinaryTree bt = new BinaryTree();
 
         bt.insert(50);
@@ -94,6 +94,7 @@ public class BinaryTreeClass {
         bt.inorder();
         System.out.println();
     }
+
     public static class BinaryTree {
         Node root;
 
@@ -102,33 +103,30 @@ public class BinaryTreeClass {
         }
 
         public void insert(int val) {
-            if(root == null){
+            if (root == null) {
                 root = new Node(val);
-            }
-            else {
+            } else {
                 insert(root, val);
             }
         }
 
-        private void insert(Node parent, int val){
-            if(parent.left == null && val < parent.val){
+        private void insert(Node parent, int val) {
+            if (parent.left == null && val < parent.val) {
                 parent.left = new Node(val);
                 parent.left.parent = parent;
-            }
-            else if(parent.right == null && val >= parent.val) {
+            } else if (parent.right == null && val >= parent.val) {
                 parent.right = new Node(val);
                 parent.right.parent = parent;
-            }
-            else if(val < parent.val) {
+            } else if (val < parent.val) {
                 insert(parent.left, val);
-            }
-            else {
+            } else {
                 insert(parent.right, val);
             }
         }
 
         /**
          * the public method that is accessible for deletion
+         *
          * @param val the value to be removed from the BST
          * @return the node with the specified value
          */
@@ -138,28 +136,26 @@ public class BinaryTreeClass {
 
         /**
          * private helper method for the public delete method.
-         * @param val the value to be searched and removed
+         *
+         * @param val  the value to be searched and removed
          * @param node the current node we are checking to see if it has the same value as the val param
          * @return the node that we are removing
          */
         private Node delete(int val, Node node) {
-            if(search(val) == null) { //search to see if the value exists in the BST
+            if (search(val) == null) { //search to see if the value exists in the BST
                 return null;
-            }
-            else{
-                if(val < node.val){
+            } else {
+                if (val < node.val) {
                     return delete(val, node.left);
-                }
-                else if(val > node.val){
+                } else if (val > node.val) {
                     return delete(val, node.right);
-                }
-                else{
+                } else {
                     //node is a leaf
-                    if(node.left == null && node.right == null) {
+                    if (node.left == null && node.right == null) {
                         deleteLeafNode(node);
                     }
                     //node has one child
-                    else if((node.left != null && node.right == null) || (node.left == null && node.right != null)){
+                    else if ((node.left != null && node.right == null) || (node.left == null && node.right != null)) {
                         deleteSingleChildNode(node);
                     }
                     //node has 2 children
@@ -173,9 +169,10 @@ public class BinaryTreeClass {
 
         /**
          * detaches a node from its parent
+         *
          * @param node the node to be detached from its parent
          */
-        private void deleteLeafNode(Node node){
+        private void deleteLeafNode(Node node) {
             detach(node);
         }
 
@@ -183,27 +180,27 @@ public class BinaryTreeClass {
          * removes a node from the BST that has a single child. The node might have a right child or left child
          * if it has a left child it is replaced by its predecessor. If the predecessor has a child it will be relinked
          * if it has a right child it is replaced bu its successor. If the successor has a child it will be relinked
+         *
          * @param node the node to be deleted
          */
-        private void deleteSingleChildNode(Node node){
-            if(node.left != null){
+        private void deleteSingleChildNode(Node node) {
+            if (node.left != null) {
                 Node predecessor = getPredecessor(node);
-                if(predecessor.left != null){
+                if (predecessor.left != null) {
                     //relink the predecessor's child to its parent
                     predecessor.parent.right = predecessor.left;
                     predecessor.left.parent = predecessor.parent;
                     //replace the current node with the predecessor
                     node.left.parent = predecessor;
-                    if(predecessor != node.left) { //will cause the predecessor to point to itself. Infinite loop
+                    if (predecessor != node.left) { //will cause the predecessor to point to itself. Infinite loop
                         predecessor.left = node.left;
                     }
                     predecessor.parent = node.parent;
-                }
-                else {
+                } else {
                     //just
                     node.left.parent = predecessor;
                     predecessor.parent.right = null;
-                    if(node.left != predecessor){ //will cause the predecessor to point to itself. Infinite loop
+                    if (node.left != predecessor) { //will cause the predecessor to point to itself. Infinite loop
                         predecessor.left = node.left;
                     }
                     predecessor.parent = node.parent;
@@ -211,23 +208,22 @@ public class BinaryTreeClass {
                 detach(node, predecessor);
             }
             //node has a right branch
-            else{
+            else {
                 Node successor = getSuccessor(node);
-                if(successor.right != null){
+                if (successor.right != null) {
                     //relink the predecessor's child to its parent
                     successor.parent.left = successor.right;
                     successor.right.parent = successor.parent;
                     //replace the current node with the successor
                     node.right.parent = successor;
-                    if(node.right != successor) { //will cause the successor to point to itself. Infinite loop
+                    if (node.right != successor) { //will cause the successor to point to itself. Infinite loop
                         successor.right = node.right;
                     }
                     successor.parent = node.parent;
-                }
-                else {
+                } else {
                     node.right.parent = successor;
                     successor.parent.left = null;
-                    if(node.right != successor) { //will cause the successor to point to itself. Infinite loop
+                    if (node.right != successor) { //will cause the successor to point to itself. Infinite loop
                         successor.right = node.right;
                     }
                     successor.parent = node.parent;
@@ -239,31 +235,31 @@ public class BinaryTreeClass {
         /**
          * removes a node from the BST that has two children.
          * we replace the node with its predecessor. If the predecessor has a child it will be relinked
+         *
          * @param node the node to be deleted
          */
-        private void deleteTwoChildNode(Node node){
+        private void deleteTwoChildNode(Node node) {
             //we can choose to either replace with the successor or predecessor. Just go with predecessor
             Node predecessor = getPredecessor(node);
-            if(predecessor.left != null){
+            if (predecessor.left != null) {
                 //relink the predecessor's child to its parent
                 predecessor.parent.right = predecessor.left;
                 predecessor.left.parent = predecessor.parent;
                 //replace the current node with the predecessor
                 node.left.parent = predecessor;
-                if(node.left != predecessor) {
+                if (node.left != predecessor) {
                     predecessor.left = node.left;
                 }
                 predecessor.parent = node.parent;
-            }
-            else {
+            } else {
                 node.left.parent = predecessor;
                 predecessor.parent.right = null;
-                if(predecessor != node.left) { //will cause the predecessor to point to itself. Infinite loop
+                if (predecessor != node.left) { //will cause the predecessor to point to itself. Infinite loop
                     predecessor.left = node.left;
                 }
                 predecessor.parent = node.parent;
             }
-            if(predecessor != node.left) { //will cause the predecessor to point to itself. Infinite loop
+            if (predecessor != node.left) { //will cause the predecessor to point to itself. Infinite loop
                 predecessor.left = node.left;
             }
             predecessor.right = node.right;
@@ -274,35 +270,35 @@ public class BinaryTreeClass {
 
         /**
          * detached a node from its parent
+         *
          * @param node the node to be detached
          */
-        private void detach(Node node){
-            if(node != root) {
+        private void detach(Node node) {
+            if (node != root) {
                 if (node.parent.left == node) {
                     node.parent.left = null;
                 } else {
                     node.parent.right = null;
                 }
-            }
-            else {
+            } else {
                 root = null;
             }
         }
 
         /**
          * detaches a node from its parent. Replaces the parents child with the replacement node
-         * @param current the current node to be removed
+         *
+         * @param current     the current node to be removed
          * @param replacement the replacement node to replace the current node
          */
-        private void detach(Node current, Node replacement){
-            if(current != root) {
+        private void detach(Node current, Node replacement) {
+            if (current != root) {
                 if (current.parent.left == current) {
                     current.parent.left = replacement;
                 } else {
                     current.parent.right = replacement;
                 }
-            }
-            else{
+            } else {
                 root = replacement;
                 root.parent = null;
             }
@@ -310,18 +306,18 @@ public class BinaryTreeClass {
 
         /**
          * returns the successor of a node
+         *
          * @param node the node we want to produce a successor of
          * @return the successor
          */
-        private Node getSuccessor(Node node){
+        private Node getSuccessor(Node node) {
             Node successor = node;
-            if(successor.right != null){
+            if (successor.right != null) {
                 successor = successor.right;
-                while(successor.left != null){
+                while (successor.left != null) {
                     successor = successor.left;
                 }
-            }
-            else{
+            } else {
                 successor = null;
             }
             return successor;
@@ -329,57 +325,53 @@ public class BinaryTreeClass {
 
         /**
          * returns a predecessor of a node
+         *
          * @param node the node we want to produce a predecessor of
          * @return the predecessor
          */
-        private Node getPredecessor(Node node){
+        private Node getPredecessor(Node node) {
             Node predecessor = node;
-            if(predecessor.left != null){
+            if (predecessor.left != null) {
                 predecessor = predecessor.left;
-                while(predecessor.right != null){
+                while (predecessor.right != null) {
                     predecessor = predecessor.right;
                 }
-            }
-            else {
+            } else {
                 predecessor = null;
             }
             return predecessor;
         }
 
         public void inorder() {
-            if(root != null) {
+            if (root != null) {
                 inorder(root);
-            }
-            else {
+            } else {
                 System.out.println("Empty");
             }
         }
 
-        private void inorder(Node node){
-            if(node != null){
+        private void inorder(Node node) {
+            if (node != null) {
                 inorder(node.left);
                 System.out.println(node.val);
                 inorder(node.right);
             }
         }
 
-        public Node search(int val){
+        public Node search(int val) {
             return search(val, root);
         }
 
-        public Node search(int val, Node node){
-            if(node == null) {
+        public Node search(int val, Node node) {
+            if (node == null) {
                 return null;
-            }
-            else {
-                if(val == node.val) {
+            } else {
+                if (val == node.val) {
                     return node;
-                }
-                else {
-                    if(val > node.val) {
+                } else {
+                    if (val > node.val) {
                         return search(val, node.right);
-                    }
-                    else {
+                    } else {
                         return search(val, node.left);
                     }
                 }
@@ -387,13 +379,14 @@ public class BinaryTreeClass {
             }
         }
     }
+
     private static class Node {
         public Node left;
         public Node right;
         public Node parent;
         public int val;
 
-        public Node(int val){
+        public Node(int val) {
             this.val = val;
         }
     }

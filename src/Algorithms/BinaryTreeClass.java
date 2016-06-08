@@ -1,9 +1,12 @@
 package Algorithms;
 
+import java.util.TreeMap;
+
 /**
  * Created by josephthomaschaske on 5/31/16.
  */
 public class BinaryTreeClass {
+
     public static void main(String[] args) {
         BinaryTree bt = new BinaryTree();
 
